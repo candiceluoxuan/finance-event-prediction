@@ -14,9 +14,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.ansj.domain.Term;
-import org.candice.finance_event.utilities.UnicodeHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import finance_event_prediction_utilities.UnicodeHelper;
 
 
 public class ProcessTrainingFile extends TrainingFileLoader {

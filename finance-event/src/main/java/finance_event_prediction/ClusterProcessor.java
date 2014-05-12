@@ -32,10 +32,10 @@ import moa.options.FloatOption;
 import org.ansj.app.keyword.KeyWordComputer;
 import org.ansj.app.keyword.Keyword;
 import org.ansj.domain.Term;
-import org.candice.finance_event.utilities.UnicodeHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import finance_event_prediction_utilities.UnicodeHelper;
 import finance_event_prediction_word2vec.VectorCalculator;
 import finance_event_prediction_word2vec.Word2VEC;
 

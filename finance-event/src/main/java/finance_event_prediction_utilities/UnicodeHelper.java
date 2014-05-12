@@ -1,4 +1,4 @@
-package org.candice.finance_event.utilities;
+package finance_event_prediction_utilities;
 
 
 import java.io.UnsupportedEncodingException;
@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class UnicodeHelper {
 
-	/*public static String toUTF8(String unicode) {
+	public static String toUTF8_bak(String unicode) {
 		try {
 			// Convert from Unicode to UTF-8
 			byte[] utf8 = unicode.getBytes("UTF-8");
@@ -18,7 +18,7 @@ public class UnicodeHelper {
 		} catch (UnsupportedEncodingException e) {
 		}
 		return "error";
-	}*/
+	}
 	
 	
 	public static String toUTF8(String unicode) {  

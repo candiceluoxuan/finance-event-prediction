@@ -1,7 +1,7 @@
 package com.luoxuan.finance_event_prediction.utilities;
 
-import org.candice.finance_event.utilities.UnicodeHelper;
 
+import finance_event_prediction_utilities.UnicodeHelper;
 import junit.framework.TestCase;
 
 public class TestUnicodeHelper extends TestCase {
