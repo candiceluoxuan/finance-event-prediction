@@ -224,10 +224,12 @@ public class ClusterProcessor extends TrainingFileLoader {
 	protected void persistentCluster(List<Weibo> p_weibos) {
 		Map<Cluster, List<Weibo>> clusters = new HashMap<>();
 		for (Weibo weibo : p_weibos) {
-			if (!clusters.containsKey(weibo.getCluster())) {
-				clusters.put(weibo.getCluster(), new LinkedList<Weibo>());
+			if (weibo.getCluster() != null) {
+				if (!clusters.containsKey(weibo.getCluster())) {
+					clusters.put(weibo.getCluster(), new LinkedList<Weibo>());
+				}
+				clusters.get(weibo.getCluster()).add(weibo);
 			}
-			clusters.get(weibo.getCluster()).add(weibo);
 		}
 
 		for (Entry<Cluster, List<Weibo>> entry : clusters.entrySet()) {
