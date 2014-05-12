@@ -8,8 +8,8 @@ public class TestProcessTrainingFile extends TestCase {
 
 	ProcessTrainingFile processTrainingFile = new SplidWordsProcessor();
 	public void testProcessFile() {
-		processTrainingFile.trainByTestNews("E:\\DATA");
-//		processTrainingFile.trainByTestNews("E:\\新建文件夹");
+//	     processTrainingFile.trainByTestNews("E:\\DATA");
+		//processTrainingFile.trainByTestNews("E:\\新建文件夹");
 	}
 
 }

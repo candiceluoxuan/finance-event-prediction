@@ -35,7 +35,7 @@ public class ProcessTrainingFile extends TrainingFileLoader {
 				new FileInputStream(inputFile), "gbk"));
 				PrintWriter out = new PrintWriter(new BufferedWriter(
 						new OutputStreamWriter(
-								new FileOutputStream(outputFile), "UTF-8")))) {
+								new FileOutputStream(outputFile, true), "UTF-8")))) {
 
 			String text;
 			while ((text = input.readLine()) != null) {

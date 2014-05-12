@@ -25,8 +25,13 @@
 		<dependency>
 			<groupId>org.ansj</groupId>
 			<artifactId>ansj_seg</artifactId>
-			<classifier>min</classifier> <!--如果是需要nlp方式分词,就去掉这个标签 -->
+			<!-- <classifier>min</classifier> --> <!--如果是需要nlp方式分词,就去掉这个标签 -->
 			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.talexu</groupId>
+			<artifactId>moa</artifactId>
+			<version>2013.12-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
