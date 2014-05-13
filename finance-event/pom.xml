@@ -29,6 +29,11 @@
 			<version>1.4</version>
 		</dependency>
 		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.1.40</version>
+		</dependency>
+		<dependency>
 			<groupId>com.talexu</groupId>
 			<artifactId>moa</artifactId>
 			<version>2013.12-SNAPSHOT</version>

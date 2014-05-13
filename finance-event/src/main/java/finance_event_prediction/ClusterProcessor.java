@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -35,6 +36,9 @@ import org.ansj.domain.Term;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+
 import finance_event_prediction_utilities.UnicodeHelper;
 import finance_event_prediction_word2vec.VectorCalculator;
 import finance_event_prediction_word2vec.Word2VEC;
@@ -50,6 +54,7 @@ public class ClusterProcessor extends TrainingFileLoader {
 
 	private String vectorPath = "E:\\IndependentProject\\vectors.bin";
 	private String outputPath = "E:\\IndependentProject\\";
+	private String clusterPath = outputPath + "cluster.bin";
 	Pattern textPattern = Pattern.compile("\"text\": \"(.*?)\"");
 
 	LUOClusterer luoClusterer;
@@ -67,7 +72,7 @@ public class ClusterProcessor extends TrainingFileLoader {
 
 	VectorCalculator vectorCalculator;
 
-	List<Weibo> weibos = new LinkedList<>();
+//	List<Weibo> weibos = new LinkedList<>();
 
 	public ClusterProcessor() {
 		initClusterer();
@@ -142,7 +147,7 @@ public class ClusterProcessor extends TrainingFileLoader {
 						weibo.getKeywords().add(keyword.getName());
 					}
 					// logger.debug("Keywords: {}", weibo.getKeywords());
-					weibos.add(weibo);
+//					weibos.add(weibo);
 
 					train(weibo);
 				}
@@ -178,15 +183,23 @@ public class ClusterProcessor extends TrainingFileLoader {
 			logger.debug("{}", cluster.getInfo());
 		}
 
-		List<Weibo> c_weibos = matchCluster(weibos);
-		for (Weibo weibo : c_weibos) {
-			if (weibo.getCluster() != null) {
-				logger.debug("Cluster ID is {}, Weibo is {}", weibo
-						.getCluster().getId(), weibo);
-			}
+//		List<Weibo> c_weibos = matchCluster(weibos);
+//		for (Weibo weibo : c_weibos) {
+//			if (weibo.getCluster() != null) {
+//				logger.debug("Cluster ID is {}, Weibo is {}", weibo
+//						.getCluster().getId(), weibo);
+//			}
+//		}
+
+		try (FileOutputStream f = new FileOutputStream(clusterPath)) {
+			ObjectOutputStream oos = new ObjectOutputStream(f);
+			oos.writeObject(luoClusterer.copy().getClusteringResult());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		persistentCluster(c_weibos);
+
+		// persistentCluster(c_weibos);
 	}
 
 	protected Weibo matchCluster(AutoExpandVector<Cluster> clusters, Weibo weibo) {
