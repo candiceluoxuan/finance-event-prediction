@@ -18,7 +18,7 @@ public class TestClusterProcessor {
 
 	@Test
 	public void testProcessFile() {
-		clusterProcessor.trainByTestNews("E:\\新建文件夹");
+		clusterProcessor.trainByTestNews("E:\\DATA");
 	}
 
 	@Test

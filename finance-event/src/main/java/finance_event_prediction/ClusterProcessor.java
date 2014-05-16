@@ -14,17 +14,13 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import java_cup.internal_error;
 
 import moa.cluster.Cluster;
 import moa.core.AutoExpandVector;
@@ -32,21 +28,16 @@ import moa.options.FloatOption;
 
 import org.ansj.app.keyword.KeyWordComputer;
 import org.ansj.app.keyword.Keyword;
-import org.ansj.domain.Term;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-
-import finance_event_prediction_utilities.UnicodeHelper;
-import finance_event_prediction_word2vec.VectorCalculator;
-import finance_event_prediction_word2vec.Word2VEC;
 
 import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
+import finance_event_prediction_utilities.UnicodeHelper;
+import finance_event_prediction_word2vec.VectorCalculator;
+import finance_event_prediction_word2vec.Word2VEC;
 
 public class ClusterProcessor extends TrainingFileLoader {
 
@@ -140,7 +131,8 @@ public class ClusterProcessor extends TrainingFileLoader {
 					// logger.debug("{}", content_utf8);
 
 					// Keywords
-					Weibo weibo = new Weibo(content_utf8);
+					ClusteredWeibo weibo = new ClusteredWeibo();
+					weibo.setContent(content_utf8);
 					Collection<Keyword> keywords = kwc
 							.computeArticleTfidf(content_utf8);
 					for (Keyword keyword : keywords) {
@@ -160,7 +152,7 @@ public class ClusterProcessor extends TrainingFileLoader {
 
 	}
 
-	protected void train(Weibo weibo) {
+	protected void train(ClusteredWeibo weibo) {
 		double[] vector = initializeVector(vectorCalculator
 				.getWordsVector(weibo.getKeywords()));
 		if (vector != null) {
@@ -202,7 +194,7 @@ public class ClusterProcessor extends TrainingFileLoader {
 		// persistentCluster(c_weibos);
 	}
 
-	protected Weibo matchCluster(AutoExpandVector<Cluster> clusters, Weibo weibo) {
+	protected ClusteredWeibo matchCluster(AutoExpandVector<Cluster> clusters, ClusteredWeibo weibo) {
 		if (weibo.getInstance() != null) {
 			double maxProbability = 0;
 			for (Cluster cluster : clusters) {
@@ -218,13 +210,13 @@ public class ClusterProcessor extends TrainingFileLoader {
 		return weibo;
 	}
 
-	protected Weibo matchCluster(Weibo weibo) {
+	protected ClusteredWeibo matchCluster(ClusteredWeibo weibo) {
 		return matchCluster(getClusters(), weibo);
 	}
 
-	protected List<Weibo> matchCluster(List<Weibo> p_weibos) {
+	protected List<ClusteredWeibo> matchCluster(List<ClusteredWeibo> p_weibos) {
 		AutoExpandVector<Cluster> clusters = getClusters();
-		for (Weibo quantizedNew : p_weibos) {
+		for (ClusteredWeibo quantizedNew : p_weibos) {
 			matchCluster(clusters, quantizedNew);
 		}
 		return p_weibos;
@@ -234,25 +226,25 @@ public class ClusterProcessor extends TrainingFileLoader {
 		return luoClusterer.copy().getClusteringResult().getClustering();
 	}
 
-	protected void persistentCluster(List<Weibo> p_weibos) {
-		Map<Cluster, List<Weibo>> clusters = new HashMap<>();
-		for (Weibo weibo : p_weibos) {
+	protected void persistentCluster(List<ClusteredWeibo> p_weibos) {
+		Map<Cluster, List<ClusteredWeibo>> clusters = new HashMap<>();
+		for (ClusteredWeibo weibo : p_weibos) {
 			if (weibo.getCluster() != null) {
 				if (!clusters.containsKey(weibo.getCluster())) {
-					clusters.put(weibo.getCluster(), new LinkedList<Weibo>());
+					clusters.put(weibo.getCluster(), new LinkedList<ClusteredWeibo>());
 				}
 				clusters.get(weibo.getCluster()).add(weibo);
 			}
 		}
 
-		for (Entry<Cluster, List<Weibo>> entry : clusters.entrySet()) {
+		for (Entry<Cluster, List<ClusteredWeibo>> entry : clusters.entrySet()) {
 			File outputFile = new File(outputPath + entry.getKey().getWeight()
 					+ " - " + entry.getKey().getId() + ".txt");
 
 			try (PrintWriter out = new PrintWriter(new BufferedWriter(
 					new OutputStreamWriter(new FileOutputStream(outputFile,
 							true), "UTF-8")))) {
-				for (Weibo weibo : entry.getValue()) {
+				for (ClusteredWeibo weibo : entry.getValue()) {
 					out.println(weibo);
 				}
 			} catch (UnsupportedEncodingException e) {
