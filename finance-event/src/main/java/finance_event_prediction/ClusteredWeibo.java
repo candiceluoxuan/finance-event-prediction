@@ -33,6 +33,14 @@ public class ClusteredWeibo extends PersistentWeibo {
 	public ClusteredWeibo(String content, List<String> keywords, double[] vector) {
 		super(content, keywords, vector);
 	}
+	
+	public ClusteredWeibo(PersistentWeibo persistentWeibo){
+		setId(persistentWeibo.getId());
+		setUid(persistentWeibo.getUid());
+		setContent(persistentWeibo.getContent());
+		setKeywords(persistentWeibo.getKeywords());
+		setVector(persistentWeibo.getVector());
+	}
 
 	@Override
 	public String toString() {

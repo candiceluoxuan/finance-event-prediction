@@ -17,7 +17,7 @@ public class TestWeiboPreprocessor {
 
 	@Test
 	public void testProcessFile() {
-		weiboPreprocessor.trainByTestNews("E:\\新建文件夹");
+		weiboPreprocessor.trainByTestNews("E:\\DATA");
 	}
 
 }

@@ -8,11 +8,11 @@ import moa.cluster.Clustering;
 
 public class ClusterLoader {
 
-	public static Clustering loadCluster(String path) {
-		Clustering b = null;
+	public static LUOClusterer loadCluster(String path) {
+		LUOClusterer b = null;
 		try (FileInputStream f = new FileInputStream(path)) {
 			ObjectInputStream ois = new ObjectInputStream(f);
-			b = (Clustering) ois.readObject();
+			b = (LUOClusterer) ois.readObject();
 		} catch (IOException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

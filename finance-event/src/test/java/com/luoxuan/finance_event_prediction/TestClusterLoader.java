@@ -12,19 +12,21 @@ import org.slf4j.LoggerFactory;
 
 import finance_event_prediction.ClusterLoader;
 import finance_event_prediction.ClusterProcessor;
+import finance_event_prediction.LUOClusterer;
 
 public class TestClusterLoader {
 
 	Logger logger = LoggerFactory.getLogger(TestClusterLoader.class);
-	
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
 
 	@Test
 	public void testLoadCluster() {
-		Clustering clustering = ClusterLoader.loadCluster("E:\\IndependentProject\\cluster.bin");
-		for (Cluster cluster : clustering.getClustering()) {
+		LUOClusterer clustering = ClusterLoader
+				.loadCluster("E:\\IndependentProject\\cluster.bin");
+		for (Cluster cluster : clustering.getClusteringResult().getClustering()) {
 			logger.debug("{}", cluster.getInfo());
 		}
 	}
